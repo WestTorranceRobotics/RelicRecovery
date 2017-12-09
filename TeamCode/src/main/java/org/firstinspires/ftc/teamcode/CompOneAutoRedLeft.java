@@ -30,6 +30,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -40,9 +41,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="comp1AutoRed", group="Linear Opmode")
-//@Disabled
-public class CompOneAutoRed extends LinearOpMode {
+@Autonomous(name="comp1AutoRedLeft", group="Linear Opmode")
+@Disabled
+public class CompOneAutoRedLeft extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -94,25 +95,29 @@ public class CompOneAutoRed extends LinearOpMode {
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         waitForStart();
+        lift.setTargetPosition(-500);
+        lift.setPower(0.6);
         runtime.reset();
-        final double JEWEL_EXCAVATOR_SERVO_ARM_POSITION = 0.525;
+        final double JEWEL_EXCAVATOR_SERVO_ARM_POSITION = 0.6;
         final double RED_THRESHOLD = 5;
 
         jewelExcavator.setPosition(JEWEL_EXCAVATOR_SERVO_ARM_POSITION);
         sleep(1000);
         if (color.red() >= RED_THRESHOLD){
-            setLRPower(1, 1, 300);
+            setLRPower(.5, .5, 300);
             stopRobot();
-            jewelExcavator.setPosition(0);
             sleep(1000);
-            setLRPower(-1, -1, 1700);
+            jewelExcavator.setPosition(0);
+            sleep(3000);
+            setLRPower(-1, -0.5, 1700);
         }
         else{
             setLRPower(-1, -1, 300);
             stopRobot();
-            jewelExcavator.setPosition(0);
             sleep(1000);
-            setLRPower(-1, -1, 1100);
+            jewelExcavator.setPosition(0);
+            sleep(3000);
+            setLRPower(-1, -0.5, 1000);
         }
         /*
         stopRobot();

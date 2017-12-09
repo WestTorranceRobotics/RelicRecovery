@@ -31,7 +31,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -41,9 +40,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="comp1AutoBlue", group="Linear Opmode")
+@Autonomous(name="comp2AutoBlueLeft", group="Linear Opmode")
 //@Disabled
-public class CompOneAutoBlue extends LinearOpMode {
+public class CompTwoAutoBlueLeft extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -94,36 +93,80 @@ public class CompOneAutoBlue extends LinearOpMode {
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         waitForStart();
+
+        lift.setTargetPosition(-500);
+        lift.setPower(0.6);
         runtime.reset();
-        final double JEWEL_EXCAVATOR_SERVO_ARM_POSITION = 0.419;
+        final double JEWEL_EXCAVATOR_SERVO_ARM_POSITION = 0.6;
         final double RED_THRESHOLD = 10;
 
         jewelExcavator.setPosition(JEWEL_EXCAVATOR_SERVO_ARM_POSITION);
         sleep(1000);
         if (color.red() >= RED_THRESHOLD){
-            setLRPower(-1, -1, 300);
+            moveForwardInches(-1, 6);
             stopRobot();
+            sleep(1000);
             jewelExcavator.setPosition(0);
             sleep(1000);
-            setLRPower(1, 1, 1700);
+            moveForwardInches(1, 28);
         }
         else{
-            setLRPower(1, 1, 300);
+            moveForwardInches(1, 6);
             stopRobot();
-            jewelExcavator.setPosition(0);
             sleep(1000);
-            setLRPower(1, 1, 1100);
+            jewelExcavator.setPosition(0);
+            sleep(3000);
+            moveForwardInches(1, 16);
         }
         stopRobot();
     }
-    void setLRPower(double l, double r, long s){
-        left1.setPower(l);
-        left2.setPower(l);
-        right1.setPower(r);
-        right2.setPower(r);
-        sleep(s);
+    void moveForwardInches(double p, double i){
+        //init wheel stats
+        final double PI = 3.14159265358979;
+        final double WHEEL_D = 4;
+        final int ENCODER_TICKS_PER_R = 1120;
+        //determine target
+        int LtargEncPos = left1.getCurrentPosition() + (int) (i * ENCODER_TICKS_PER_R / PI / WHEEL_D);
+        int RtargEncPos = right1.getCurrentPosition() + (int) (i * ENCODER_TICKS_PER_R / PI / WHEEL_D);
+        //set modes
+        if (!left1.getMode().equals(DcMotor.RunMode.RUN_TO_POSITION)){
+            left1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+        if (!right1.getMode().equals(DcMotor.RunMode.RUN_TO_POSITION)){
+            right1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+        if (!left2.getMode().equals(DcMotor.RunMode.RUN_WITHOUT_ENCODER)){
+            left2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
+        if (!right2.getMode().equals(DcMotor.RunMode.RUN_WITHOUT_ENCODER)){
+            right2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
+        left1.setTargetPosition(LtargEncPos);
+        right1.setTargetPosition(RtargEncPos);
+        setLPower(p);
+        setRPower(p);
+        while(left1.isBusy() || right1.isBusy() && opModeIsActive()){
+            if (!left1.isBusy()){
+                setLPower(0);
+            }
+            if (!right1.isBusy()){
+                setRPower(0);
+            }
+        }
+        stopRobot();
     }
     void stopRobot(){
-        setLRPower(0, 0, 0);
+        left1.setPower(0);
+        left2.setPower(0);
+        right1.setPower(0);
+        right2.setPower(0);
+    }
+    void setLPower(double l){
+        left1.setPower(l);
+        left2.setPower(l);
+    }
+    void setRPower(double l){
+        right1.setPower(l);
+        right2.setPower(l);
     }
 }

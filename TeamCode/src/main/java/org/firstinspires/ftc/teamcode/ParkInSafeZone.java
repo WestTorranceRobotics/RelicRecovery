@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -10,7 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Created by WTR on 11/8/2017.
  */
 @Autonomous(name="ParkInSafeZone", group="WTR")
-//@Disabled
+@Disabled
 public class ParkInSafeZone extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private ElapsedTime stateTime = new ElapsedTime();

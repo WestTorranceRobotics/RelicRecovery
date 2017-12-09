@@ -30,7 +30,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -41,9 +40,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="pranit", group="Linear Opmode")
-@Disabled
-public class PranitIsSmartOrNot extends LinearOpMode {
+@Autonomous(name="comp2AutoBlueRight", group="Linear Opmode")
+//@Disabled
+public class CompTwoAutoBlueRight extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -58,7 +57,7 @@ public class PranitIsSmartOrNot extends LinearOpMode {
     private Servo leftRamp;
     private Servo rightDoor;
     private Servo leftDoor;
-    //color sensor arm
+    //color sensor arm \/
     private Servo jewelExcavator;
     @Override
     public void runOpMode() {
@@ -94,47 +93,33 @@ public class PranitIsSmartOrNot extends LinearOpMode {
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         waitForStart();
+
+        lift.setTargetPosition(-500);
+        lift.setPower(0.6);
         runtime.reset();
+        final double JEWEL_EXCAVATOR_SERVO_ARM_POSITION = 0.6;
+        final double RED_THRESHOLD = 10;
 
-        final double JEWEL_EXCAVATOR_SERVO_ARM_POSITION = 0.419;
-        final double RED_THRESHOLD = 15;
-
-        //set to down position
         jewelExcavator.setPosition(JEWEL_EXCAVATOR_SERVO_ARM_POSITION);
         sleep(1000);
-        //sense red
         if (color.red() >= RED_THRESHOLD){
-            setLRPower(1, 1, 300);
-            stopRobot();
-            jewelExcavator.setPosition(0);
-            sleep(1000);
-            setLRPower(-1, -1, 1800);
-        }
-        //not sense red
-        else{
             setLRPower(-1, -1, 300);
             stopRobot();
-            jewelExcavator.setPosition(0);
             sleep(1000);
-            setLRPower(-1, -1, 1200);
+            jewelExcavator.setPosition(0);
+            sleep(3000);
+            setLRPower(1,0.5, 1800);
+        }
+        else{
+            setLRPower(1, 1, 300);
+            stopRobot();
+            sleep(1000);
+            jewelExcavator.setPosition(0);
+            sleep(3000);
+            setLRPower(1, 0.5, 1200);
         }
         stopRobot();
-
-        //dump block in cryptobox
-        leftRamp.setPosition(0);
-        rightRamp.setPosition(1);
-        leftDoor.setPosition(1);
-        rightDoor.setPosition(0);
-        sleep(2000);
-        setLRPower(1,1,1000);
-        leftRamp.setPosition(1);
-        rightRamp.setPosition(0);
-        leftDoor.setPosition(0.5);
-        rightDoor.setPosition(0.5);
-        sleep(2000);
-
     }
-
     void setLRPower(double l, double r, long s){
         left1.setPower(l);
         left2.setPower(l);
@@ -142,7 +127,6 @@ public class PranitIsSmartOrNot extends LinearOpMode {
         right2.setPower(r);
         sleep(s);
     }
-
     void stopRobot(){
         setLRPower(0, 0, 0);
     }

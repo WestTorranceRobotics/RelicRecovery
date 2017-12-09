@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-import android.graphics.drawable.ColorDrawable;
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -10,16 +9,13 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.ServoController;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import static android.os.SystemClock.sleep;
 
-
-@TeleOp(name = "RelicRecoveryTeleOp", group = "WTR")
+@TeleOp(name = "One controller (v1.0)", group = "WTR")
 //@Disabled
 
-public class RelicRecoveryTeleOp extends OpMode {
+public class SriRam_TeleOp extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -44,7 +40,8 @@ public class RelicRecoveryTeleOp extends OpMode {
     //public ServoController servoController;
 
     //300 servos
-    /*public Servo dumpingServoLeft;
+    /*
+    public Servo dumpingServoLeft;
     public Servo dumpingSer
     voRight;
 
@@ -58,6 +55,7 @@ public class RelicRecoveryTeleOp extends OpMode {
     //180 servos
     public Servo leftDoorServo;
     public Servo rightDoorServo;*/
+
 
     @Override
     public void init() {
@@ -165,24 +163,24 @@ public class RelicRecoveryTeleOp extends OpMode {
 
         // Intake Code limited to 0.5 power
 
-        /*if (Math.abs(gamepad2.left_stick_y) < .2) {
+        /*if (Math.abs(gamepad1.left_stick_y) < .2) {
             intakeMotorLeft.setPower(0);
         } else {
-            intakeMotorLeft.setPower(-gamepad2.left_stick_y * 0.5);
+            intakeMotorLeft.setPower(-gamepad1.left_stick_y * 0.5);
         }
 
-        if (Math.abs(gamepad2.right_stick_y) < .2) {
+        if (Math.abs(gamepad1.right_stick_y) < .2) {
             intakeMotorRight.setPower(0);
         } else {
-            intakeMotorRight.setPower(-gamepad2.right_stick_y * 0.5);
+            intakeMotorRight.setPower(-gamepad1.right_stick_y * 0.5);
         }
         */
 
 
-        if(gamepad2.left_trigger > 0.18){
+        if(gamepad1.left_trigger > 0.18){
             intakeMotorLeft.setPower(-1);
         }
-        else if (gamepad2.left_bumper){
+        else if (gamepad1.left_bumper){
             intakeMotorLeft.setPower(1);
         }
         else{
@@ -190,10 +188,10 @@ public class RelicRecoveryTeleOp extends OpMode {
         }
 
 
-        if(gamepad2.right_trigger > 0.18){
+        if(gamepad1.right_trigger > 0.18){
             intakeMotorRight.setPower(-1);
         }
-        else if (gamepad2.right_bumper){
+        else if (gamepad1.right_bumper){
             intakeMotorRight.setPower(1);
         }
         else{
@@ -217,15 +215,15 @@ public class RelicRecoveryTeleOp extends OpMode {
                 lift.setTargetPosition(-1100);
                 break;
         }
-        if(gamepad2.dpad_up){
+        if(gamepad1.dpad_up){
             liftState = 1;
             lift.setPower(1);
         }
-        if(gamepad2.dpad_down){
+        if(gamepad1.dpad_down){
             liftState = -1;
             lift.setPower(0.6);
         }
-        if(gamepad2.dpad_left || gamepad2.dpad_right){
+        if(gamepad1.dpad_left || gamepad1.dpad_right){
             liftState = 0;
             lift.setPower(0.6);
         }
@@ -233,7 +231,7 @@ public class RelicRecoveryTeleOp extends OpMode {
 
         //dump code
         //press x to reset; press y to dump
-        if(gamepad2.x & !gamepad2.y && !flipUp){
+        if(gamepad1.x & !gamepad1.y && !flipUp){
             leftramp.setPosition(0);
             rightramp.setPosition(1);
             flipUp = true;
@@ -242,7 +240,7 @@ public class RelicRecoveryTeleOp extends OpMode {
             doorOpen = false;
         }
 
-        if(!gamepad2.x & gamepad2.y && flipUp){
+        if(!gamepad1.x & gamepad1.y && flipUp){
             leftramp.setPosition(1);
             rightramp.setPosition(0);
             flipUp = false;
@@ -251,14 +249,14 @@ public class RelicRecoveryTeleOp extends OpMode {
             doorOpen = true;
         }
         //door code
-        if(gamepad2.a & !gamepad2.b && !doorOpen){
+        if(gamepad1.a & !gamepad1.b && !doorOpen){
             leftDoor.setPosition(0);
             rightDoor.setPosition(1);
             doorOpen = true;
         }
 
 
-        if(!gamepad2.a & gamepad2.b && doorOpen && flipUp){
+        if(!gamepad1.a & gamepad1.b && doorOpen && flipUp){
             leftDoor.setPosition(.5);
             rightDoor.setPosition(.5);
             doorOpen = false;
@@ -267,8 +265,8 @@ public class RelicRecoveryTeleOp extends OpMode {
         //telemetry
         telemetry.addData("leftPower", gamepad1.left_stick_y);
         telemetry.addData("rightPower", gamepad1.right_stick_y);
-        //telemetry.addData("intakeIeftPower", gamepad2.left_stick_y);
-        //telemetry.addData("intakeRightPower", gamepad2.right_stick_y);
+        //telemetry.addData("intakeIeftPower", gamepad1.left_stick_y);
+        //telemetry.addData("intakeRightPower", gamepad1.right_stick_y);
         telemetry.addData("leftDoor", leftDoor.getPosition());
         telemetry.addData("rightDoor", rightDoor.getPosition());
         telemetry.addData("leftramp", leftramp.getPosition());
@@ -297,13 +295,13 @@ public class RelicRecoveryTeleOp extends OpMode {
             intakeMotorRight.setPower(0);
         }*/
         //open
-       /* if (gamepad2.a) {
+       /* if (gamepad1.a) {
             setLeftDoorServo(-1);
             setRightDoorServo(1);
         }
 
         //close
-        if (gamepad2.b) {
+        if (gamepad1.b) {
             setLeftDoorServo(0);
             setRightDoorServo(0);
         }
@@ -311,10 +309,10 @@ public class RelicRecoveryTeleOp extends OpMode {
         //FLIPPP
         */
        /*
-        if (gamepad2.y) {
+        if (gamepad1.y) {
             setLeftDumpServo(1);
             setRightDumpServo(1);
-        } if (!gamepad2.y){
+        } if (!gamepad1.y){
             setLeftDumpServo(0);
             setRightDumpServo(0);
         }
@@ -322,12 +320,12 @@ public class RelicRecoveryTeleOp extends OpMode {
         /*
 
         //upadoodles
-        if (gamepad2.right_bumper) {
+        if (gamepad1.right_bumper) {
             elevatorMotor.setPower(1);
         }
 
         //downadoodles
-        if (gamepad2.left_bumper) {
+        if (gamepad1.left_bumper) {
             elevatorMotor.setPower(-1);
             }*/
     }

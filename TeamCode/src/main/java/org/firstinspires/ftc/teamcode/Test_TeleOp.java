@@ -30,6 +30,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -43,7 +44,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 @TeleOp(name="New TeleOp Test for RR", group="Linear Opmode")
-//@Disabled
+@Disabled
 public class Test_TeleOp extends LinearOpMode {
 
     // Declare OpMode members.
@@ -168,8 +169,8 @@ public class Test_TeleOp extends LinearOpMode {
                 liftUp = false;
             }
             */
-            //PIDCoefficients topPID = new PIDCoefficients(10, 1, 0);
-            //lift.setPIDCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, topPID);
+            PIDCoefficients topPID = new PIDCoefficients(10, 1, 0);
+            lift.setPIDCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, topPID);
             if(gamepad1.a & !gamepad1.b && !liftUp){
                 lift.setTargetPosition(-1100);
                 lift.setPower(1);

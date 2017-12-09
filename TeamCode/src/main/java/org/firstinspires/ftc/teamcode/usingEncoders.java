@@ -53,7 +53,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @Autonomous(name="Encoder2", group="Linear Opmode")
-//@Disabled
+@Disabled
 public class usingEncoders extends LinearOpMode {
 
     // Declare OpMode members.

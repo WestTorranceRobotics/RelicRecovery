@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import android.graphics.drawable.ColorDrawable;
-
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -10,16 +8,13 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.ServoController;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import static android.os.SystemClock.sleep;
 
-
-@TeleOp(name = "RelicRecoveryTeleOp", group = "WTR")
+@TeleOp(name = "RelicRecovery TeleOp v2.0", group = "WTR")
 //@Disabled
 
-public class RelicRecoveryTeleOp extends OpMode {
+public class CompTwoRelicRecoveryTeleOp extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -243,8 +238,8 @@ public class RelicRecoveryTeleOp extends OpMode {
         }
 
         if(!gamepad2.x & gamepad2.y && flipUp){
-            leftramp.setPosition(1);
-            rightramp.setPosition(0);
+            leftramp.setPosition(0.65);
+            rightramp.setPosition(0.35);
             flipUp = false;
             leftDoor.setPosition(0);
             rightDoor.setPosition(1);

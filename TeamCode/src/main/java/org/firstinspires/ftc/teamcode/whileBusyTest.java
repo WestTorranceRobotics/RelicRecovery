@@ -30,13 +30,14 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 
 @Autonomous(name="Encoder1", group="Linear Opmode")
-//@Disabled
+@Disabled
 public class whileBusyTest extends LinearOpMode {
 
     // Declare OpMode members.

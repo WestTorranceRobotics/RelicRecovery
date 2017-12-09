@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
@@ -12,7 +13,7 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @Autonomous(name = "ParkRight", group = "WTR")
-//@Disabled
+@Disabled
 public class ParkRight extends OpMode {
 
     //States
